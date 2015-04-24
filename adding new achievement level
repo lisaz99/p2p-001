@@ -1,0 +1,16 @@
+
+USE `particles2planets-001_2015-04-21`;
+ALTER TABLE `data_users_attributes` ADD `achievement_level_new` varchar(255) AFTER `achievement_level`;
+
+
+UPDATE `data_users_attributes`
+SET `achievement_level_new` = (
+            CASE
+						WHEN normal_grade = 0 THEN 'Zero' -- if this is executed, then we are out of the loop (matches all zero people)
+                        WHEN achievement_level = 'none' THEN 'Fail' -- only get here, if grade > =0
+                        WHEN achievement_level = 'normal' THEN 'Pass'
+                        WHEN achievement_level = 'distinction' THEN 'Distinction'
+                        ELSE NULL
+            END)
+            
+# updated the table in MySQL on the 24 Friday apr 2015
